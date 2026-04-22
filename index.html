@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder Pro</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- font awesome іконки -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1>Resume Builder Pro</h1>
+      <p>Конструктор резюме з шаблонами, PDF, JSON, редактором фото та портфоліо</p>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="newResumeBtn" class="btn" type="button">Нове</button>
+      <button id="duplicateResumeBtn" class="btn" type="button">Дублювати</button>
+      <button id="deleteResumeBtn" class="btn btn-danger" type="button">Видалити</button>
+      <button id="saveBtn" class="btn" type="button">Зберегти</button>
+      <button id="downloadBtn" class="btn btn-primary" type="button">Скачати PDF</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+
+    <!-- ліва панель — налаштування -->
+    <aside class="settings-panel">
+      <div class="settings-scroll">
+
+        <div class="card">
+          <h3>Мої резюме</h3>
+          <select id="resumeSelect"></select>
+        </div>
+
+        <div class="card">
+          <h3>Налаштування</h3>
+
+          <label for="resumeTitle">Назва резюме</label>
+          <input type="text" id="resumeTitle" placeholder="Наприклад: Frontend Resume">
+
+          <label for="templateSelect">Шаблон</label>
+          <select id="templateSelect">
+            <option value="classic">Classic</option>
+            <option value="modern">Modern</option>
+            <option value="minimal">Minimal</option>
+            <option value="dark">Dark</option>
+          </select>
+
+          <label for="accentColor">Акцентний колір</label>
+          <input type="color" id="accentColor" value="#2f6fed">
+
+          <label for="workType">Формат роботи</label>
+          <select id="workType">
+            <option value="">Оберіть формат</option>
+            <option value="Віддалена робота">Віддалена робота</option>
+            <option value="Робота в офісі">Робота в офісі</option>
+            <option value="Гібридний формат">Гібридний формат</option>
+            <option value="Фриланс">Фриланс</option>
+          </select>
+        </div>
+
+        <!-- основна інформація -->
+        <div class="card">
+          <h3>Основне</h3>
+
+          <label for="firstName">Ім'я</label>
+          <input type="text" id="firstName">
+
+          <label for="lastName">Прізвище</label>
+          <input type="text" id="lastName">
+
+          <label for="position">Посада</label>
+          <input type="text" id="position">
+
+          <label for="city">Місто</label>
+          <input type="text" id="city">
+
+          <label for="photoUpload">Фото з комп'ютера</label>
+          <input type="file" id="photoUpload" accept="image/*">
+        </div>
+
+        <div class="card">
+          <h3>Редактор фото</h3>
+
+          <div class="image-editor">
+            <div class="image-editor-preview">
+              <div class="image-editor-frame" id="editorFrame">
+                <img id="editorPreviewPhoto" alt="editor-preview">
+              </div>
+            </div>
+
+            <div class="image-editor-controls">
+
+              <div class="editor-control-group">
+                <div class="editor-control-head">
+                  <span>Масштаб</span>
+                  <strong id="photoScaleValue">1</strong>
+                </div>
+                <input type="range" id="photoScale" min="1" max="3" step="0.05">
+              </div>
+
+              <div class="editor-control-group">
+                <div class="editor-control-head">
+                  <span>Позиція X</span>
+                  <strong id="photoXValue">0</strong>
+                </div>
+                <input type="range" id="photoX" min="-250" max="250" step="1">
+              </div>
+
+              <div class="editor-control-group">
+                <div class="editor-control-head">
+                  <span>Позиція Y</span>
+                  <strong id="photoYValue">0</strong>
+                </div>
+                <input type="range" id="photoY" min="-250" max="250" step="1">
+              </div>
+
+              <div class="editor-control-group">
+                <div class="editor-control-head">
+                  <span>Скруглення</span>
+                  <strong id="photoRadiusValue">10</strong>
+                </div>
+                <input type="range" id="photoRadius" min="0" max="50" step="1">
+              </div>
+
+              <button id="resetPhotoEditorBtn" class="btn" type="button">Скинути налаштування</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Контакти</h3>
+
+          <label for="phone">Телефон</label>
+          <input type="text" id="phone" placeholder="+380...">
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="mail@gmail.com">
+
+          <label for="telegram">Telegram</label>
+          <input type="text" id="telegram" placeholder="@username">
+
+          <label for="whatsapp">WhatsApp</label>
+          <input type="text" id="whatsapp" placeholder="+380...">
+
+          <label for="viber">Viber</label>
+          <input type="text" id="viber" placeholder="+380...">
+
+          <label>Куди краще звертатися</label>
+          <div class="checkbox-group">
+            <label class="check-row">
+              <input type="checkbox" class="contact-preferred" value="telegram"> Telegram
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="contact-preferred" value="whatsapp"> WhatsApp
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="contact-preferred" value="viber"> Viber
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="contact-preferred" value="phone"> Телефон
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="contact-preferred" value="email"> Email
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="row-between">
+            <h3>Навички</h3>
+            <button id="addSkillBtn" class="btn-small" type="button">+ Додати</button>
+          </div>
+          <div id="skillsInputs"></div>
+        </div>
+
+        <div class="card">
+          <h3>Про себе</h3>
+          <textarea id="about" rows="7"></textarea>
+        </div>
+
+        <div class="card">
+          <div class="row-between">
+            <h3>Досвід</h3>
+            <button id="addExperienceBtn" class="btn-small" type="button">+ Додати</button>
+          </div>
+          <div id="experienceInputs"></div>
+        </div>
+
+        <div class="card">
+          <div class="row-between">
+            <h3>Портфоліо</h3>
+            <button id="addPortfolioBtn" class="btn-small" type="button">+ Додати</button>
+          </div>
+          <p class="muted">Додавай GitHub, Behance, CodePen, Dribbble або інші посилання на свої роботи</p>
+          <div id="portfolioInputs"></div>
+        </div>
+
+        <div class="card">
+          <h3>Порядок блоків</h3>
+          <p class="muted">Перетягуй блоки вниз або вверх</p>
+          <div id="blockOrderList" class="sortable-list"></div>
+        </div>
+
+        <!-- json імпорт / експорт -->
+        <div class="card">
+          <h3>JSON</h3>
+          <div class="json-actions">
+            <button id="exportJsonBtn" class="btn" type="button">Експорт JSON</button>
+            <label class="file-label">
+              Імпорт JSON
+              <input type="file" id="importJsonInput" accept=".json,application/json" hidden>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- превью резюме -->
+    <section class="preview-panel">
+      <div class="preview-scroll">
+        <div class="resume template-classic" id="resume">
+
+          <div class="resume-header">
+            <div class="resume-photo-wrap" id="previewPhotoWrap">
+              <img id="previewPhoto" alt="photo">
+            </div>
+
+            <div class="resume-head-info">
+              <h1 id="previewFullName">ІМ'Я ПРІЗВИЩЕ</h1>
+              <p id="previewPosition">Посада</p>
+
+              <div class="mini-info">
+                <p id="previewCity"></p>
+                <p id="previewWorkType"></p>
+                <div class="preferred-contact-list" id="preferredContactList"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="resume-body">
+            <aside class="resume-sidebar">
+              <div class="resume-block" data-block-id="contacts">
+                <h3>КОНТАКТИ</h3>
+                <div id="previewContacts"></div>
+              </div>
+
+              <div class="resume-block" data-block-id="skills">
+                <h3>НАВИЧКИ</h3>
+                <ul id="previewSkills"></ul>
+              </div>
+            </aside>
+
+            <section class="resume-content" id="contentBlocks">
+              <div class="resume-block" data-block-id="about">
+                <h3>ПРО СЕБЕ</h3>
+                <p id="previewAbout"></p>
+              </div>
+
+              <div class="resume-block" data-block-id="experience">
+                <h3>ДОСВІД</h3>
+                <div id="previewExperience"></div>
+              </div>
+
+              <div class="resume-block" data-block-id="portfolio">
+                <h3>ПОРТФОЛІО</h3>
+                <div id="previewPortfolio" class="portfolio-grid"></div>
+              </div>
+            </section>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- бібліотеки для pdf -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
